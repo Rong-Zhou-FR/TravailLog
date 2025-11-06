@@ -102,7 +102,7 @@ export function useLocalStorage() {
   };
 
   const importData = (file: File) => {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<WorkLog>((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
@@ -115,7 +115,7 @@ export function useLocalStorage() {
           }
           
           setWorkLog(data);
-          resolve();
+          resolve(data);
         } catch (error) {
           if (error instanceof SyntaxError) {
             reject(new Error('Invalid JSON file. Please select a valid TravailLog export file.'));
