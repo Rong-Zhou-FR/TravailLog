@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { WorkLog, Shift } from './types';
 import { getDaysInMonth, formatDate, generateId, calculateDayTotal } from './utils';
+import { useLanguage } from './LanguageContext';
 
 interface CalendarProps {
   workLog: WorkLog;
@@ -13,11 +14,10 @@ interface CalendarProps {
 
 export function Calendar({ workLog, setWorkLog, currentYear, currentMonth }: CalendarProps) {
   const [expandedDate, setExpandedDate] = useState<string | null>(null);
+  const { t } = useLanguage();
   
   const days = getDaysInMonth(currentYear, currentMonth);
   const firstDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay();
-  
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   
   const addShift = (dateKey: string) => {
     setWorkLog(prev => {
@@ -83,7 +83,7 @@ export function Calendar({ workLog, setWorkLog, currentYear, currentMonth }: Cal
     <div className="w-full">
       {/* Week day headers */}
       <div className="grid grid-cols-7 gap-1 mb-2">
-        {weekDays.map(day => (
+        {t.weekDays.map(day => (
           <div key={day} className="text-center font-semibold text-sm p-2 bg-gray-100 dark:bg-gray-800">
             {day}
           </div>
@@ -121,7 +121,7 @@ export function Calendar({ workLog, setWorkLog, currentYear, currentMonth }: Cal
               
               {dayData && dayData.shifts.length > 0 && (
                 <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
-                  <div>{dayData.shifts.length} shift{dayData.shifts.length > 1 ? 's' : ''}</div>
+                  <div>{dayData.shifts.length} {dayData.shifts.length > 1 ? t.shifts : t.shift}</div>
                   {dayTotals && (
                     <div className="font-semibold text-green-600 dark:text-green-400">
                       {Math.floor(dayTotals.withoutPauses / 60)}h {dayTotals.withoutPauses % 60}m
@@ -150,7 +150,7 @@ export function Calendar({ workLog, setWorkLog, currentYear, currentMonth }: Cal
                         />
                       </div>
                       <div className="flex gap-1">
-                        <label className="text-xs">Pause:</label>
+                        <label className="text-xs">{t.pauseLabel}</label>
                         <input
                           type="number"
                           min="0"
@@ -158,13 +158,13 @@ export function Calendar({ workLog, setWorkLog, currentYear, currentMonth }: Cal
                           onChange={(e) => updateShift(dateKey, shift.id, 'pauseMinutes', parseInt(e.target.value) || 0)}
                           className="w-20 px-1 py-1 border rounded dark:bg-gray-700 dark:border-gray-600"
                         />
-                        <span className="self-center">min</span>
+                        <span className="self-center">{t.minutesLabel}</span>
                       </div>
                       <button
                         onClick={() => deleteShift(dateKey, shift.id)}
                         className="w-full px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
                       >
-                        Delete
+                        {t.deleteButton}
                       </button>
                     </div>
                   ))}
@@ -172,7 +172,7 @@ export function Calendar({ workLog, setWorkLog, currentYear, currentMonth }: Cal
                     onClick={() => addShift(dateKey)}
                     className="w-full px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-xs"
                   >
-                    Add Shift
+                    {t.addShift}
                   </button>
                 </div>
               )}
