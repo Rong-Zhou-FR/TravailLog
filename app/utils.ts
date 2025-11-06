@@ -82,3 +82,20 @@ export function formatDate(date: Date): string {
 export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 }
+
+export function getFirstMonthInWorkLog(workLog: WorkLog): { year: number; month: number } | null {
+  const dateKeys = Object.keys(workLog);
+  
+  if (dateKeys.length === 0) {
+    return null;
+  }
+  
+  // Sort date keys to find the earliest date
+  const sortedKeys = dateKeys.sort();
+  const firstDateKey = sortedKeys[0];
+  
+  // Parse YYYY-MM-DD format
+  const [year, month] = firstDateKey.split('-').map(Number);
+  
+  return { year, month };
+}

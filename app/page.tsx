@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { Calendar } from './Calendar';
 import { useLocalStorage } from './useLocalStorage';
-import { calculateMonthStats } from './utils';
+import { calculateMonthStats, getFirstMonthInWorkLog } from './utils';
 
 export default function Home() {
   const { workLog, setWorkLog, isLoaded, exportData, importData } = useLocalStorage();
@@ -44,7 +44,15 @@ export default function Home() {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        await importData(file);
+        const importedData = await importData(file);
+        const firstMonth = getFirstMonthInWorkLog(importedData);
+        
+        // Navigate to the first month in the imported data
+        if (firstMonth) {
+          setCurrentYear(firstMonth.year);
+          setCurrentMonth(firstMonth.month);
+        }
+        
         alert('Data imported successfully!');
       } catch (error) {
         alert('Error importing data. Please check the file format.');
