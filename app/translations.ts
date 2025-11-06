@@ -38,7 +38,7 @@ export interface Translations {
 
 export const translations: Record<Language, Translations> = {
   en: {
-    appTitle: 'TravailLog',
+    appTitle: 'WorkLog',
     appSubtitle: 'Track your work hours - Zero server-side storage',
     previousButton: 'Previous',
     nextButton: 'Next',
@@ -76,7 +76,7 @@ export const translations: Record<Language, Translations> = {
     metaDescription: 'Track your work hours with zero server-side storage',
   },
   fr: {
-    appTitle: 'TravailLog',
+    appTitle: 'WorkLog',
     appSubtitle: 'Suivez vos heures de travail - Aucun stockage côté serveur',
     previousButton: 'Précédent',
     nextButton: 'Suivant',
