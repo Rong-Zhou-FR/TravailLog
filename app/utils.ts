@@ -90,8 +90,8 @@ export function getFirstMonthInWorkLog(workLog: WorkLog): { year: number; month:
     return null;
   }
   
-  // Sort date keys to find the earliest date
-  const sortedKeys = dateKeys.sort();
+  // Sort date keys chronologically to find the earliest date
+  const sortedKeys = dateKeys.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
   const firstDateKey = sortedKeys[0];
   
   // Parse YYYY-MM-DD format
