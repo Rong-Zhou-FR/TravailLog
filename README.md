@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TravailLog
+
+A Next.js application for tracking work hours with **zero server-side storage**. All data is stored locally in your browser.
+
+## Features
+
+### 📅 Calendar View
+- Monthly calendar displaying all days of the current month
+- Navigate to any past or future month
+- Quick "Today" button to return to current month
+- Visual indication of days with recorded shifts
+
+### ⏰ Shift Management
+- Add multiple shifts per day
+- Record start and end times for each shift (from x time to y time)
+- Track in-shift pauses in minutes
+- Edit or delete shifts at any time
+- Real-time calculation of work hours per day
+
+### 📊 Statistics
+- Monthly total work time **with pauses** included
+- Monthly total work time **without pauses** (excluding pause durations)
+- Automatic updates as you add or edit shifts
+- Clear display of hours and minutes worked
+
+### 💾 Data Management
+- **Zero server-side storage** - all data is stored in your browser's localStorage
+- **Export** your data as JSON to save your progress
+- **Import** previously exported JSON files to restore your data
+- Perfect for backups or transferring data between browsers
+
+### 🎨 User Interface
+- Clean, modern design using Tailwind CSS
+- Dark mode support
+- Responsive layout that works on mobile and desktop
+- Intuitive interface with built-in usage instructions
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+ and npm
 
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Rong-Zhou-FR/TravailLog.git
+cd TravailLog
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Learn More
+### Build for Production
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How to Use
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Add a Shift**: Click the **+** button on any day to expand it
+2. **Configure the Shift**: 
+   - Set start time (e.g., 09:00)
+   - Set end time (e.g., 17:00)
+   - Add pause duration in minutes (e.g., 30 for a 30-minute lunch break)
+3. **Multiple Shifts**: Click "Add Shift" to add more shifts to the same day
+4. **View Statistics**: Monthly totals update automatically at the top
+5. **Navigate Months**: Use Previous/Next buttons or "Today" to jump to current month
+6. **Export Data**: Click "Export JSON" to save your data
+7. **Import Data**: Click "Import JSON" to restore from a backup
 
-## Deploy on Vercel
+## Technical Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework**: Next.js 16.0.1 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **UI Library**: React 19.2.0
+- **Storage**: Browser localStorage (no backend required)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Privacy & Security
+
+- ✅ **Zero server-side storage** - your data never leaves your browser
+- ✅ No tracking or analytics
+- ✅ No external API calls
+- ✅ Complete data ownership - export your data anytime
+
+## License
+
+This project is licensed under the terms found in the [LICENSE](LICENSE) file.
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
