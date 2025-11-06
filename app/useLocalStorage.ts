@@ -45,6 +45,62 @@ export function useLocalStorage() {
     URL.revokeObjectURL(url);
   };
 
+  const validateWorkLog = (data: unknown): data is WorkLog => {
+    if (!data || typeof data !== 'object') {
+      return false;
+    }
+
+    for (const [key, value] of Object.entries(data)) {
+      // Validate date key format (YYYY-MM-DD)
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) {
+        return false;
+      }
+
+      // Validate DayData structure
+      if (!value || typeof value !== 'object') {
+        return false;
+      }
+
+      const dayData = value as Record<string, unknown>;
+      
+      // Check for required fields
+      if (typeof dayData.date !== 'string' || !Array.isArray(dayData.shifts)) {
+        return false;
+      }
+
+      // Validate each shift
+      for (const shift of dayData.shifts) {
+        if (!shift || typeof shift !== 'object') {
+          return false;
+        }
+
+        const s = shift as Record<string, unknown>;
+        
+        // Check shift fields
+        if (
+          typeof s.id !== 'string' ||
+          typeof s.startTime !== 'string' ||
+          typeof s.endTime !== 'string' ||
+          typeof s.pauseMinutes !== 'number'
+        ) {
+          return false;
+        }
+
+        // Validate time format (HH:MM)
+        if (!/^\d{2}:\d{2}$/.test(s.startTime) || !/^\d{2}:\d{2}$/.test(s.endTime)) {
+          return false;
+        }
+
+        // Validate pauseMinutes is non-negative
+        if (s.pauseMinutes < 0) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  };
+
   const importData = (file: File) => {
     return new Promise<void>((resolve, reject) => {
       const reader = new FileReader();
@@ -52,10 +108,20 @@ export function useLocalStorage() {
         try {
           const content = e.target?.result as string;
           const data = JSON.parse(content);
+          
+          if (!validateWorkLog(data)) {
+            reject(new Error('Invalid data format. Please ensure the file contains valid TravailLog data.'));
+            return;
+          }
+          
           setWorkLog(data);
           resolve();
         } catch (error) {
-          reject(error);
+          if (error instanceof SyntaxError) {
+            reject(new Error('Invalid JSON file. Please select a valid TravailLog export file.'));
+          } else {
+            reject(error);
+          }
         }
       };
       reader.onerror = () => reject(reader.error);
