@@ -8,6 +8,9 @@ export interface Translations {
   todayButton: string;
   exportButton: string;
   importButton: string;
+  exportPdfButton: string;
+  nameLabel: string;
+  ssnLabel: string;
   monthlyStats: string;
   totalWithPauses: string;
   totalWithoutPauses: string;
@@ -45,6 +48,9 @@ export const translations: Record<Language, Translations> = {
     todayButton: 'Today',
     exportButton: 'Export JSON',
     importButton: 'Import JSON',
+    exportPdfButton: 'Export PDF',
+    nameLabel: 'Name',
+    ssnLabel: 'Social Security Number',
     monthlyStats: 'Monthly Statistics',
     totalWithPauses: 'Total Work Time (with pauses)',
     totalWithoutPauses: 'Total Work Time (without pauses)',
@@ -83,6 +89,9 @@ export const translations: Record<Language, Translations> = {
     todayButton: "Aujourd'hui",
     exportButton: 'Exporter JSON',
     importButton: 'Importer JSON',
+    exportPdfButton: 'Exporter PDF',
+    nameLabel: 'Nom',
+    ssnLabel: 'Numéro de sécurité sociale',
     monthlyStats: 'Statistiques Mensuelles',
     totalWithPauses: 'Temps de travail total (avec pauses)',
     totalWithoutPauses: 'Temps de travail total (sans pauses)',
