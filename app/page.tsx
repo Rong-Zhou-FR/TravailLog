@@ -6,13 +6,42 @@ import { useLocalStorage } from './useLocalStorage';
 import { calculateMonthStats, getFirstMonthInWorkLog } from './utils';
 import { useLanguage } from './LanguageContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { generatePDF } from './pdfGenerator';
 
 export default function Home() {
   const { workLog, setWorkLog, isLoaded, exportData, importData } = useLocalStorage();
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [name, setName] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('worklog_user_name') || '';
+    }
+    return '';
+  });
+  const [ssn, setSsn] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('worklog_user_ssn') || '';
+    }
+    return '';
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useLanguage();
+  
+  // Save name to localStorage
+  const handleNameChange = (newName: string) => {
+    setName(newName);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('worklog_user_name', newName);
+    }
+  };
+  
+  // Save SSN to localStorage
+  const handleSsnChange = (newSsn: string) => {
+    setSsn(newSsn);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('worklog_user_ssn', newSsn);
+    }
+  };
   
   const previousMonth = () => {
     if (currentMonth === 1) {
@@ -61,6 +90,20 @@ export default function Home() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+  };
+  
+  const handleExportPDF = () => {
+    const stats = calculateMonthStats(workLog, currentYear, currentMonth);
+    generatePDF({
+      workLog,
+      year: currentYear,
+      month: currentMonth,
+      monthName: t.monthNames[currentMonth - 1],
+      name,
+      socialSecurityNumber: ssn,
+      stats,
+      footerText: t.pdfFooter,
+    });
   };
   
   const stats = calculateMonthStats(workLog, currentYear, currentMonth);
@@ -137,6 +180,42 @@ export default function Home() {
                   className="hidden"
                 />
               </label>
+              <button
+                onClick={handleExportPDF}
+                className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+              >
+                {t.exportPdfButton}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* User Information */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                {t.nameLabel}
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => handleNameChange(e.target.value)}
+                className="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+                placeholder={t.nameLabel}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                {t.ssnLabel}
+              </label>
+              <input
+                type="text"
+                value={ssn}
+                onChange={(e) => handleSsnChange(e.target.value)}
+                className="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+                placeholder={t.ssnLabel}
+              />
             </div>
           </div>
         </div>

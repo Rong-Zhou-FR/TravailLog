@@ -8,6 +8,9 @@ export interface Translations {
   todayButton: string;
   exportButton: string;
   importButton: string;
+  exportPdfButton: string;
+  nameLabel: string;
+  ssnLabel: string;
   monthlyStats: string;
   totalWithPauses: string;
   totalWithoutPauses: string;
@@ -34,6 +37,7 @@ export interface Translations {
   weekDays: string[];
   metaTitle: string;
   metaDescription: string;
+  pdfFooter: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -45,6 +49,9 @@ export const translations: Record<Language, Translations> = {
     todayButton: 'Today',
     exportButton: 'Export JSON',
     importButton: 'Import JSON',
+    exportPdfButton: 'Export PDF',
+    nameLabel: 'Name',
+    ssnLabel: 'Social Security Number',
     monthlyStats: 'Monthly Statistics',
     totalWithPauses: 'Total Work Time (with pauses)',
     totalWithoutPauses: 'Total Work Time (without pauses)',
@@ -74,6 +81,7 @@ export const translations: Record<Language, Translations> = {
     weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     metaTitle: 'TravailLog - Work Time Tracker',
     metaDescription: 'Track your work hours with zero server-side storage',
+    pdfFooter: 'Created with WorkLog - https://worklog.ronzz.org',
   },
   fr: {
     appTitle: 'WorkLog',
@@ -83,6 +91,9 @@ export const translations: Record<Language, Translations> = {
     todayButton: "Aujourd'hui",
     exportButton: 'Exporter JSON',
     importButton: 'Importer JSON',
+    exportPdfButton: 'Exporter PDF',
+    nameLabel: 'Nom',
+    ssnLabel: 'Numéro de sécurité sociale',
     monthlyStats: 'Statistiques Mensuelles',
     totalWithPauses: 'Temps de travail total (avec pauses)',
     totalWithoutPauses: 'Temps de travail total (sans pauses)',
@@ -112,5 +123,6 @@ export const translations: Record<Language, Translations> = {
     weekDays: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
     metaTitle: 'TravailLog - Suivi du Temps de Travail',
     metaDescription: 'Suivez vos heures de travail sans stockage côté serveur',
+    pdfFooter: 'Créé avec TravailLog - https://worklog.ronzz.org',
   },
 };
