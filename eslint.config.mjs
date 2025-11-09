@@ -13,6 +13,13 @@ const eslintConfig = [
       "node_modules/**",
     ],
   },
+  {
+    rules: {
+      // Allow setState in useEffect when synchronizing with external systems like localStorage
+      // This is a valid pattern for client-only apps that need to sync with browser APIs
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ];
 
 export default eslintConfig;

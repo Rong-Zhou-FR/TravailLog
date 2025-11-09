@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Calendar } from './Calendar';
 import { useLocalStorage } from './useLocalStorage';
 import { calculateMonthStats, getFirstMonthInWorkLog } from './utils';
@@ -9,10 +9,17 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 
 export default function Home() {
   const { workLog, setWorkLog, isLoaded, exportData, importData } = useLocalStorage();
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [currentYear, setCurrentYear] = useState(2024);
+  const [currentMonth, setCurrentMonth] = useState(1);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useLanguage();
+  
+  // Initialize to current date after mount (external system synchronization)
+  useEffect(() => {
+    const today = new Date();
+    setCurrentYear(today.getFullYear());
+    setCurrentMonth(today.getMonth() + 1);
+  }, []);
   
   const previousMonth = () => {
     if (currentMonth === 1) {
