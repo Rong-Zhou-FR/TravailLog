@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Calendar } from './Calendar';
 import { useLocalStorage } from './useLocalStorage';
 import { calculateMonthStats, getFirstMonthInWorkLog } from './utils';
@@ -10,36 +10,49 @@ import { generatePDF } from './pdfGenerator';
 
 export default function Home() {
   const { workLog, setWorkLog, isLoaded, exportData, importData } = useLocalStorage();
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
-  const [name, setName] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('worklog_user_name') || '';
-    }
-    return '';
-  });
-  const [ssn, setSsn] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('worklog_user_ssn') || '';
-    }
-    return '';
-  });
+  const [currentYear, setCurrentYear] = useState(2024);
+  const [currentMonth, setCurrentMonth] = useState(1);
+  const [name, setName] = useState('');
+  const [ssn, setSsn] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useLanguage();
+  
+  // Initialize to current date after mount (external system synchronization)
+  useEffect(() => {
+    const today = new Date();
+    setCurrentYear(today.getFullYear());
+    setCurrentMonth(today.getMonth() + 1);
+  }, []);
+
+  // Load name and SSN from localStorage after mount (external system synchronization)
+  useEffect(() => {
+    try {
+      const savedName = localStorage.getItem('worklog_user_name');
+      const savedSsn = localStorage.getItem('worklog_user_ssn');
+      if (savedName) setName(savedName);
+      if (savedSsn) setSsn(savedSsn);
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    }
+  }, []);
   
   // Save name to localStorage
   const handleNameChange = (newName: string) => {
     setName(newName);
-    if (typeof window !== 'undefined') {
+    try {
       localStorage.setItem('worklog_user_name', newName);
+    } catch (error) {
+      console.error('Error saving name:', error);
     }
   };
   
   // Save SSN to localStorage
   const handleSsnChange = (newSsn: string) => {
     setSsn(newSsn);
-    if (typeof window !== 'undefined') {
+    try {
       localStorage.setItem('worklog_user_ssn', newSsn);
+    } catch (error) {
+      console.error('Error saving SSN:', error);
     }
   };
   
