@@ -102,6 +102,7 @@ export default function Home() {
       name,
       socialSecurityNumber: ssn,
       stats,
+      footerText: t.pdfFooter,
     });
   };
   

@@ -10,14 +10,22 @@ interface PDFExportData {
   name: string;
   socialSecurityNumber: string;
   stats: MonthStats;
+  footerText: string;
 }
 
 export function generatePDF(data: PDFExportData): void {
-  const { workLog, year, month, monthName, name, socialSecurityNumber, stats } = data;
+  const { workLog, year, month, monthName, name, socialSecurityNumber, stats, footerText } = data;
   
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
+  
+  // Helper function to add footer to current page
+  const addFooter = () => {
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.text(footerText, pageWidth - 10, pageHeight - 10, { align: 'right' });
+  };
   
   // Header
   doc.setFontSize(16);
@@ -82,6 +90,7 @@ export function generatePDF(data: PDFExportData): void {
       row++;
       // Check if we need a new page
       if (startY + row * cellHeight > pageHeight - 20) {
+        addFooter(); // Add footer to previous page before creating new page
         doc.addPage();
         row = 0;
         startY = 20;
@@ -136,6 +145,9 @@ export function generatePDF(data: PDFExportData): void {
     
     dayIndex++;
   }
+  
+  // Add footer to the last page
+  addFooter();
   
   // Save PDF
   const fileName = `worklog-${year}-${String(month).padStart(2, '0')}.pdf`;
