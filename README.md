@@ -82,7 +82,7 @@ npm start
 
 ## Technical Stack
 
-- **Framework**: Next.js 16.0.1 with App Router
+- **Framework**: Next.js 16.0.2-canary (with Turbopack)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4
 - **UI Library**: React 19.2.0
@@ -94,6 +94,31 @@ npm start
 - ✅ No tracking or analytics
 - ✅ No external API calls
 - ✅ Complete data ownership - export your data anytime
+
+## Troubleshooting
+
+### Development Server Issues
+
+If you encounter Turbopack-related errors when running `npm run dev`, try the following:
+
+1. **Clean build cache**:
+   ```bash
+   npm run clean
+   ```
+
+2. **Reinstall dependencies**:
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
+
+3. **Optional: Disable disk cache** (if issues persist):
+   ```bash
+   # Create a .env.local file with:
+   NEXT_PRIVATE_SKIP_DISK_CACHE=1
+   ```
+
+The project uses Next.js 16.0.2-canary which includes fixes for Turbopack stability issues found in earlier versions.
 
 ## License
 
