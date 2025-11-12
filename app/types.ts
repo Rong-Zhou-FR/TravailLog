@@ -20,3 +20,13 @@ export interface MonthStats {
   totalHoursWithPauses: string;
   totalHoursWithoutPauses: string;
 }
+
+export interface UserInfo {
+  name?: string;
+  ssn?: string;
+}
+
+export interface ExportData {
+  workLog: WorkLog;
+  userInfo?: UserInfo;
+}

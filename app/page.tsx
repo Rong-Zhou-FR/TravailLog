@@ -87,6 +87,12 @@ export default function Home() {
         const importedData = await importData(file);
         const firstMonth = getFirstMonthInWorkLog(importedData);
         
+        // Reload user info from localStorage (it was updated during import)
+        const savedName = localStorage.getItem('worklog_user_name');
+        const savedSsn = localStorage.getItem('worklog_user_ssn');
+        if (savedName) setName(savedName);
+        if (savedSsn) setSsn(savedSsn);
+        
         // Navigate to the first month in the imported data
         if (firstMonth) {
           setCurrentYear(firstMonth.year);
