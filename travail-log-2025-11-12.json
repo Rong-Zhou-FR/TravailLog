@@ -1,0 +1,137 @@
+{
+  "2025-10-18": {
+    "date": "2025-10-18",
+    "shifts": [
+      {
+        "id": "1762816571957-7uvfi1cwm",
+        "startTime": "11:00",
+        "endTime": "15:30",
+        "pauseMinutes": 20
+      },
+      {
+        "id": "1762816587049-oj92soqqq",
+        "startTime": "18:33",
+        "endTime": "23:57",
+        "pauseMinutes": 0
+      }
+    ]
+  },
+  "2025-10-19": {
+    "date": "2025-10-19",
+    "shifts": [
+      {
+        "id": "1762816629151-118p96i9v",
+        "startTime": "11:30",
+        "endTime": "14:55",
+        "pauseMinutes": 20
+      },
+      {
+        "id": "1762816648255-jok3so4tw",
+        "startTime": "18:33",
+        "endTime": "23:50",
+        "pauseMinutes": 0
+      }
+    ]
+  },
+  "2025-10-11": {
+    "date": "2025-10-11",
+    "shifts": [
+      {
+        "id": "1762989154786-mbjhq6wow",
+        "startTime": "11:30",
+        "endTime": "13:22",
+        "pauseMinutes": 20
+      },
+      {
+        "id": "1762989209671-kacoos3qy",
+        "startTime": "18:30",
+        "endTime": "00:35",
+        "pauseMinutes": 0
+      }
+    ]
+  },
+  "2025-10-10": {
+    "date": "2025-10-10",
+    "shifts": [
+      {
+        "id": "1762989237734-ydslps7ey",
+        "startTime": "18:00",
+        "endTime": "23:20",
+        "pauseMinutes": 20
+      }
+    ]
+  },
+  "2025-10-25": {
+    "date": "2025-10-25",
+    "shifts": [
+      {
+        "id": "1762989342144-r760hna6a",
+        "startTime": "11:30",
+        "endTime": "14:41",
+        "pauseMinutes": 20
+      },
+      {
+        "id": "1762989355318-9n5yjfy78",
+        "startTime": "18:30",
+        "endTime": "23:50",
+        "pauseMinutes": 0
+      }
+    ]
+  },
+  "2025-10-26": {
+    "date": "2025-10-26",
+    "shifts": [
+      {
+        "id": "1762989432393-m8dlq89eg",
+        "startTime": "11:30",
+        "endTime": "15:42",
+        "pauseMinutes": 20
+      },
+      {
+        "id": "1762989462151-2gfuhdsy2",
+        "startTime": "18:30",
+        "endTime": "22:55",
+        "pauseMinutes": 0
+      }
+    ]
+  },
+  "2025-10-04": {
+    "date": "2025-10-04",
+    "shifts": [
+      {
+        "id": "1762989523570-3yhw9utz0",
+        "startTime": "18:30",
+        "endTime": "00:15",
+        "pauseMinutes": 0
+      },
+      {
+        "id": "1762989595869-zfyimyrxn",
+        "startTime": "11:00",
+        "endTime": "14:12",
+        "pauseMinutes": 20
+      }
+    ]
+  },
+  "2025-10-03": {
+    "date": "2025-10-03",
+    "shifts": [
+      {
+        "id": "1762989562938-pp8r2uic0",
+        "startTime": "18:30",
+        "endTime": "23:35",
+        "pauseMinutes": 20
+      }
+    ]
+  },
+  "2025-10-05": {
+    "date": "2025-10-05",
+    "shifts": [
+      {
+        "id": "1762989656197-aa7o50eyu",
+        "startTime": "11:00",
+        "endTime": "16:08",
+        "pauseMinutes": 20
+      }
+    ]
+  }
+}
