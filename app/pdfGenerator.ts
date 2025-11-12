@@ -11,10 +11,19 @@ interface PDFExportData {
   socialSecurityNumber: string;
   stats: MonthStats;
   footerText: string;
+  translations: {
+    pdfTitle: string;
+    nameLabel: string;
+    ssnLabel: string;
+    monthlyStats: string;
+    totalWithPauses: string;
+    totalWithoutPauses: string;
+    weekDays: string[];
+  };
 }
 
 export function generatePDF(data: PDFExportData): void {
-  const { workLog, year, month, monthName, name, socialSecurityNumber, stats, footerText } = data;
+  const { workLog, year, month, monthName, name, socialSecurityNumber, stats, footerText, translations } = data;
   
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -29,29 +38,29 @@ export function generatePDF(data: PDFExportData): void {
   
   // Header
   doc.setFontSize(16);
-  doc.text(`Work Log - ${monthName} ${year}`, pageWidth / 2, 15, { align: 'center' });
+  doc.text(`${translations.pdfTitle} - ${monthName} ${year}`, pageWidth / 2, 15, { align: 'center' });
   
   // User info
   doc.setFontSize(10);
   let yPos = 25;
   if (name) {
-    doc.text(`Name: ${name}`, 15, yPos);
+    doc.text(`${translations.nameLabel}: ${name}`, 15, yPos);
     yPos += 6;
   }
   if (socialSecurityNumber) {
-    doc.text(`Social Security Number: ${socialSecurityNumber}`, 15, yPos);
+    doc.text(`${translations.ssnLabel}: ${socialSecurityNumber}`, 15, yPos);
     yPos += 6;
   }
   
   // Monthly totals
   yPos += 4;
   doc.setFontSize(12);
-  doc.text('Monthly Totals:', 15, yPos);
+  doc.text(`${translations.monthlyStats}:`, 15, yPos);
   yPos += 6;
   doc.setFontSize(10);
-  doc.text(`Total Work Time (with pauses): ${stats.totalHoursWithPauses}`, 20, yPos);
+  doc.text(`${translations.totalWithPauses}: ${stats.totalHoursWithPauses}`, 20, yPos);
   yPos += 6;
-  doc.text(`Total Work Time (without pauses): ${stats.totalHoursWithoutPauses}`, 20, yPos);
+  doc.text(`${translations.totalWithoutPauses}: ${stats.totalHoursWithoutPauses}`, 20, yPos);
   yPos += 10;
   
   // Calendar grid
@@ -63,11 +72,10 @@ export function generatePDF(data: PDFExportData): void {
   let startY = yPos;
   
   // Week headers
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
   for (let i = 0; i < 7; i++) {
-    doc.text(weekDays[i], startX + i * cellWidth + cellWidth / 2, startY, { align: 'center' });
+    doc.text(translations.weekDays[i], startX + i * cellWidth + cellWidth / 2, startY, { align: 'center' });
   }
   startY += 5;
   
@@ -97,7 +105,7 @@ export function generatePDF(data: PDFExportData): void {
         // Re-draw week headers
         doc.setFont('helvetica', 'bold');
         for (let j = 0; j < 7; j++) {
-          doc.text(weekDays[j], startX + j * cellWidth + cellWidth / 2, startY, { align: 'center' });
+          doc.text(translations.weekDays[j], startX + j * cellWidth + cellWidth / 2, startY, { align: 'center' });
         }
         startY += 5;
         doc.setFont('helvetica', 'normal');

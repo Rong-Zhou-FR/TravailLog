@@ -116,6 +116,15 @@ export default function Home() {
       socialSecurityNumber: ssn,
       stats,
       footerText: t.pdfFooter,
+      translations: {
+        pdfTitle: t.pdfTitle,
+        nameLabel: t.nameLabel,
+        ssnLabel: t.ssnLabel,
+        monthlyStats: t.monthlyStats,
+        totalWithPauses: t.totalWithPauses,
+        totalWithoutPauses: t.totalWithoutPauses,
+        weekDays: t.weekDays,
+      },
     });
   };
   
