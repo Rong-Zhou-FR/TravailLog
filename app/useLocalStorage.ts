@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { WorkLog } from './types';
+import { WorkLog, ExportData } from './types';
 
 const STORAGE_KEY = 'travail-log-data';
 
@@ -35,7 +35,20 @@ export function useLocalStorage() {
   }, [workLog, isLoaded]);
 
   const exportData = () => {
-    const dataStr = JSON.stringify(workLog, null, 2);
+    // Get user info from localStorage
+    const name = localStorage.getItem('worklog_user_name') || '';
+    const ssn = localStorage.getItem('worklog_user_ssn') || '';
+    
+    // Create export data with workLog and userInfo
+    const exportData: ExportData = {
+      workLog,
+      userInfo: {
+        name,
+        ssn,
+      }
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
@@ -109,13 +122,35 @@ export function useLocalStorage() {
           const content = e.target?.result as string;
           const data = JSON.parse(content);
           
-          if (!validateWorkLog(data)) {
+          let workLogData: WorkLog;
+          let userInfo: { name?: string; ssn?: string } | undefined;
+          
+          // Check if data is in new format (ExportData with workLog and userInfo)
+          if (data && typeof data === 'object' && 'workLog' in data) {
+            workLogData = data.workLog;
+            userInfo = data.userInfo;
+          } else {
+            // Old format - data is directly the workLog
+            workLogData = data;
+          }
+          
+          if (!validateWorkLog(workLogData)) {
             reject(new Error('Invalid data format. Please ensure the file contains valid TravailLog data.'));
             return;
           }
           
-          setWorkLog(data);
-          resolve(data);
+          // Import user info if available
+          if (userInfo) {
+            if (userInfo.name) {
+              localStorage.setItem('worklog_user_name', userInfo.name);
+            }
+            if (userInfo.ssn) {
+              localStorage.setItem('worklog_user_ssn', userInfo.ssn);
+            }
+          }
+          
+          setWorkLog(workLogData);
+          resolve(workLogData);
         } catch (error) {
           if (error instanceof SyntaxError) {
             reject(new Error('Invalid JSON file. Please select a valid TravailLog export file.'));
