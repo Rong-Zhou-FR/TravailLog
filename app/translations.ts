@@ -38,6 +38,7 @@ export interface Translations {
   metaTitle: string;
   metaDescription: string;
   pdfFooter: string;
+  pdfTitle: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -82,6 +83,7 @@ export const translations: Record<Language, Translations> = {
     metaTitle: 'TravailLog - Work Time Tracker',
     metaDescription: 'Track your work hours with zero server-side storage',
     pdfFooter: 'Created with WorkLog - https://worklog.ronzz.org',
+    pdfTitle: 'Work Log',
   },
   fr: {
     appTitle: 'WorkLog',
@@ -124,5 +126,6 @@ export const translations: Record<Language, Translations> = {
     metaTitle: 'TravailLog - Suivi du Temps de Travail',
     metaDescription: 'Suivez vos heures de travail sans stockage côté serveur',
     pdfFooter: 'Créé avec TravailLog - https://worklog.ronzz.org',
+    pdfTitle: 'Journal de Travail',
   },
 };
